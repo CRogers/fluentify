@@ -1,6 +1,6 @@
 fluentify = (args..., callback) ->
   if args.length == 0
-    return callback
+    return (topArgs...) -> callback(topArgs..., {})
   else
     name = args[0]
     return (topArg) ->

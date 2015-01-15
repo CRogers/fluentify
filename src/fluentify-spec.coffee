@@ -14,7 +14,7 @@ describe 'fluentify', ->
     callback = sinon.spy()
     fluent = fluentify callback
     fluent(1, 2)
-    expect(callback.firstCall.args).to.deep.equal [1, 2]
+    expect(callback.firstCall.args).to.deep.equal [1, 2, {}]
 
   it 'should not call the function when initialized where there is one named arg', ->
     callback = sinon.spy()
