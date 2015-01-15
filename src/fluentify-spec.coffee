@@ -15,3 +15,9 @@ describe 'fluentify', ->
     fluent = fluentify callback
     fluent(1, 2)
     expect(callback.firstCall.args).to.deep.equal [1, 2]
+
+  it 'should not call the function until the named arg has been called with one named arg', ->
+    callback = sinon.spy()
+    fluent = fluentify 'x', callback
+    fluent(1)
+    expect(callback.notCalled).to.be.true
