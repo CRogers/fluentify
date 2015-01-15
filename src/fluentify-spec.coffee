@@ -33,3 +33,9 @@ describe 'fluentify', ->
     fluent = fluentify 'foo', callback
     fluent(1).foo(2)
     expect(callback.firstCall.args).to.deep.equal [1, {foo: [2]}]
+
+  it 'should call the function with correct parameters for a single named arg with multiple arguments', ->
+    callback = sinon.spy()
+    fluent = fluentify 'foo', callback
+    fluent(1).foo(2, 3)
+    expect(callback.firstCall.args).to.deep.equal [1, {foo: [2, 3]}]

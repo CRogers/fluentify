@@ -5,9 +5,9 @@ fluentify = (args..., callback) ->
     name = args[0]
     return (topArg) ->
       ret = {}
-      ret[name] = (inArg) ->
+      ret[name] = (inArgs...) ->
         blah = {}
-        blah[name] = [inArg]
+        blah[name] = inArgs
         callback(topArg, blah)
       return ret
 
