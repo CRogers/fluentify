@@ -6,7 +6,8 @@ fluentify = (namedArgs, currentArgs, topArgs, callback) ->
   namedArgs.forEach (nameArg) ->
     ret[nameArg] = (inArgs...) ->
       currentArgs[nameArg] = inArgs
-      callback(topArgs..., currentArgs) if namedArgs.length == 1
+      unusedNamedArgs = namedArgs.filter (x) -> x != nameArg
+      fluentify(unusedNamedArgs, currentArgs, topArgs, callback)
   return ret
 
 module.exports = (namedArgs..., callback) ->
