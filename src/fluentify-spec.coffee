@@ -68,3 +68,23 @@ describe 'fluentify', ->
     it 'should call the function when both named args are called', ->
       fluent(1).bar(2).foo(3)
       expect(callback.calledOnce).to.be.true
+
+    it 'should call the function when both named args are called in the other order', ->
+      fluent(1).foo(3).bar(2)
+      expect(callback.calledOnce).to.be.true
+
+    it 'should call the function with correct parameters', ->
+      fluent(1).foo(2).bar(3)
+      expect(callback.firstCall.args).to.deep.equal [1, {foo: [2], bar: [3]}]
+
+    it 'should call the function with correct parameters when called in the other order', ->
+      fluent(1).bar(3).foo(2)
+      expect(callback.firstCall.args).to.deep.equal [1, {foo: [2], bar: [3]}]
+
+    it 'should call the function with correct parameters when multiple arguments are used', ->
+      fluent(1, 2).foo(3, 4).bar(5, 6)
+      expect(callback.firstCall.args).to.deep.equal [1, 2, {foo: [3, 4], bar: [5, 6]} ]
+
+    it 'should not allow calling the same named arg twice', ->
+      intermediary = fluent(1).foo(2)
+      expect(intermediary).to.not.have.property 'foo'
