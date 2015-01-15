@@ -1,1 +1,4 @@
-module.exports = 10
+fluentify = (callback) ->
+  return -> callback()
+
+module.exports = fluentify

@@ -1,7 +1,11 @@
 expect = require('chai').expect
+sinon = require('sinon')
 
 fluentify = require('./fluentify')
 
-describe 'foo', ->
-  it 'should work', ->
-    expect(fluentify).to.equal 10
+describe 'fluentify', ->
+  it 'should allow calling as a normal function', ->
+    callback = sinon.spy()
+    fluent = fluentify callback
+    fluent()
+    expect(callback.calledOnce).to.be.true

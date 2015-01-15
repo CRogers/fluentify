@@ -15,7 +15,7 @@ gulp.task 'clean', ->
   del(['build/*'])
 
 gulp.task 'watch', ->
-  gulp.watch(paths.coffee, ['coffee'])
+  gulp.watch(paths.coffee, ['test'])
 
 gulp.task 'test', ['coffee'], ->
   gulp.src('./build/*-spec.js', {read: false})
