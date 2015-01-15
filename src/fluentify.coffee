@@ -3,12 +3,12 @@ fluentify = (args..., callback) ->
     return (topArgs...) -> callback(topArgs..., {})
   else
     name = args[0]
-    return (topArg) ->
+    return (topArgs...) ->
       ret = {}
       ret[name] = (inArgs...) ->
         blah = {}
         blah[name] = inArgs
-        callback(topArg, blah)
+        callback(topArgs..., blah)
       return ret
 
 module.exports = fluentify
