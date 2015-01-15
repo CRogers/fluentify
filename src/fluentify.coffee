@@ -8,7 +8,7 @@ fluentify = (args..., callback) ->
       ret[name] = (inArgs...) ->
         blah = {}
         blah[name] = inArgs
-        callback(topArgs..., blah)
+        callback(topArgs..., blah) if args.length == 1
       return ret
 
 module.exports = fluentify
