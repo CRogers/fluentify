@@ -60,3 +60,7 @@ describe 'fluentify', ->
     it 'should not call the function when initialized and one named arg is called', ->
       fluent(1).foo(2)
       expect(callback.notCalled).to.be.true
+
+    it 'should not call the function when initialized and the other named arg is called', ->
+      fluent(1).bar(2)
+      expect(callback.notCalled).to.be.true
