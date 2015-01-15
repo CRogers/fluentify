@@ -5,7 +5,6 @@ mocha = require('gulp-mocha')
 
 paths =
   coffee: './src/*.coffee'
-  test: './test/*.coffee'
 
 gulp.task 'coffee', ->
   gulp.src paths.coffee
@@ -18,9 +17,6 @@ gulp.task 'clean', ->
 gulp.task 'watch', ->
   gulp.watch(paths.coffee, ['coffee'])
 
-gulp.task 'test', ->
-  gulp.src paths.test
-    .pipe(coffee())
-    .pipe(gulp.dest('./build/'))
+gulp.task 'test', ['coffee'], ->
   gulp.src('./build/*-spec.js', {read: false})
     .pipe(mocha())
