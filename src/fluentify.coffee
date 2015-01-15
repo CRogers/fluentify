@@ -1,4 +1,3 @@
-fluentify = (callback) ->
-  return -> callback()
+fluentify = (callback) -> callback
 
 module.exports = fluentify
