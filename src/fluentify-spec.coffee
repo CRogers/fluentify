@@ -16,8 +16,14 @@ describe 'fluentify', ->
     fluent(1, 2)
     expect(callback.firstCall.args).to.deep.equal [1, 2]
 
-  it 'should not call the function until the named arg has been called with one named arg', ->
+  it 'should not call the function when initialized where there is one named arg', ->
     callback = sinon.spy()
     fluent = fluentify 'x', callback
     fluent(1)
     expect(callback.notCalled).to.be.true
+
+  it 'should call the function when initialized and the named arg is used when there is one named arg', ->
+    callback = sinon.spy()
+    fluent = fluentify 'foo', callback
+    fluent(1).foo(2)
+    expect(callback.calledOnce).to.be.true
