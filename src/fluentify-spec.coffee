@@ -88,3 +88,10 @@ describe 'fluentify', ->
     it 'should not allow calling the same named arg twice', ->
       intermediary = fluent(1).foo(2)
       expect(intermediary).to.not.have.property 'foo'
+
+    it 'should allow to continue two chains from a common point without them conflicting', ->
+      start = fluent()
+      intermediary = start.foo(3)
+      start.foo(4).bar(8)
+      intermediary.bar(9)
+      expect(callback.secondCall.args).to.deep.equal [{foo: [3], bar: [9]}]

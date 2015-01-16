@@ -1,3 +1,10 @@
+extendWith = (oldObj, key, value) ->
+  newObj = {}
+  for k, v of oldObj
+    newObj[k] = v
+  newObj[key] = value
+  return newObj
+
 fluentify = (namedArgs, currentArgs, topArgs, callback) ->
   if namedArgs.length == 0
     return callback(topArgs..., currentArgs)
@@ -5,9 +12,9 @@ fluentify = (namedArgs, currentArgs, topArgs, callback) ->
   ret = {}
   namedArgs.forEach (nameArg) ->
     ret[nameArg] = (inArgs...) ->
-      currentArgs[nameArg] = inArgs
+      newCurrentArgs = extendWith(currentArgs, nameArg, inArgs)
       unusedNamedArgs = namedArgs.filter (x) -> x != nameArg
-      fluentify(unusedNamedArgs, currentArgs, topArgs, callback)
+      fluentify(unusedNamedArgs, newCurrentArgs, topArgs, callback)
   return ret
 
 module.exports = (namedArgs..., callback) ->
