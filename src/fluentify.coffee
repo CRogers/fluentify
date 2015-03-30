@@ -7,20 +7,22 @@ fluentify = do ->
     newObj[key] = value
     return newObj
 
-  fullFluentify = (namedArgs, currentArgs, topArgs, callback) ->
-    if namedArgs.length == 0
-      return callback(topArgs..., currentArgs)
+  fullFluentify = (methodNames, argsCalledForMethods, initialArgs, callback) ->
+    if methodNames.length == 0
+      return callback(initialArgs..., argsCalledForMethods)
 
-    ret = {}
-    namedArgs.forEach (nameArg) ->
-      ret[nameArg] = (inArgs...) ->
-        newCurrentArgs = extendWith(currentArgs, nameArg, inArgs)
-        unusedNamedArgs = namedArgs.filter (x) -> x != nameArg
-        fullFluentify(unusedNamedArgs, newCurrentArgs, topArgs, callback)
-    return ret
+    nextMethods = {}
+    methodNames.forEach (methodName) ->
+      nextMethods[methodName] = (methodArgs...) ->
+        newArgsCalledForMethods = extendWith(argsCalledForMethods, methodName, methodArgs)
+        unusedMethodNames = methodNames.filter (x) -> x != methodName
+        return fullFluentify(unusedMethodNames, newArgsCalledForMethods, initialArgs, callback)
+    return nextMethods
 
-  return (namedArgs..., callback) ->
-    return (topArgs...) -> fullFluentify(namedArgs, {}, topArgs, callback)
+  return (methodNames..., callback) ->
+    return (initialArgs...) -> fullFluentify(methodNames, {}, initialArgs, callback)
 
-if module?.exports? and @module != module
-  module.exports = fluentify
+do ->
+  isNodeEnvironment = module?.exports? and @module != module
+  if isNodeEnvironment
+    module.exports = fluentify
