@@ -1,11 +1,12 @@
 fluentify = do ->
 
-  extendWith = (oldObj, key, value) ->
-    newObj = {}
-    for k, v of oldObj
-      newObj[k] = v
-    newObj[key] = value
-    return newObj
+  extend = (oldObj) ->
+    with: (key, value) ->
+      newObj = {}
+      for k, v of oldObj
+        newObj[k] = v
+      newObj[key] = value
+      return newObj
 
   fullFluentify = (methodNames, argsCalledForMethods, initialArgs, callback) ->
     if methodNames.length == 0
@@ -14,7 +15,7 @@ fluentify = do ->
     nextMethods = {}
     methodNames.forEach (methodName) ->
       nextMethods[methodName] = (methodArgs...) ->
-        newArgsCalledForMethods = extendWith(argsCalledForMethods, methodName, methodArgs)
+        newArgsCalledForMethods = extend(argsCalledForMethods).with(methodName, methodArgs)
         unusedMethodNames = methodNames.filter (x) -> x != methodName
         return fullFluentify(unusedMethodNames, newArgsCalledForMethods, initialArgs, callback)
     return nextMethods
