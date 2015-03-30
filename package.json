@@ -1,0 +1,26 @@
+{
+  "name": "fluentify",
+  "description": "A library for easily making fluent apis where the order the methods are called doesn't matter",
+  "keywords": ["fluent", "fluent-api", "api"],
+  "homepage": "https://github.com/CRogers/fluentify",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CRogers/fluentify"
+  },
+  "author": "Callum Rogers",
+  "contributors": [
+    { "name": "Callum Rogers" }
+  ],
+  "main": "./dist/fluentify.js",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-coffee": "*",
+    "gulp-mocha": "*",
+    "coffee-script": "*",
+    "del": "*",
+    "mocha": "*",
+    "chai": "*",
+    "sinon": "1.12.0"
+  },
+  "version": "0.1.0"
+}

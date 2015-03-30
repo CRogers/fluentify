@@ -1,1 +1,0 @@
-npm install gulp gulp-coffee gulp-mocha coffee-script del mocha chai sinon@1.12.0
