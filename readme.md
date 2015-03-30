@@ -3,6 +3,17 @@ Fluentify
 
 Fluentify is a way to easily make fluent interfaces where the methods can be called in any order.
 
+Installation
+---
+
+Via npm: place `fluentify` in the `dependencies` your package.json or run:
+
+````
+npm install fluentify
+````
+
+Alternatively grab `dist/fluentify.js`. There are no dependencies.
+
 Examples
 ---
 
@@ -78,9 +89,8 @@ class Employee
 
 employeeBuilder = fluentify 'name', 'email', 'age', ({
     name: [name]
-    age: [age],
+    age: [age]
     salary: [salary]}) ->
-
   return new Customer(name, age, salary)
 ````
 
@@ -92,3 +102,19 @@ tenXDev = employeeBuilder().salary(200000)
 dave = tenXDev.name('dave').age(27)
 john = tenXDev.age(29).name('john')
 ````
+
+Hacking
+---
+
+Look inside the `Gulpfile` for the various tasks. To get started with autocompilation-and-tests-on-save run:
+
+````
+npm install --save-dev
+./gulp watch
+````
+
+Credits
+---
+
+[Joe Lea](https://github.com/joelea) for the original coffeescript fluent interface concept and bouncing off ideas for automating
+ the pattern.
