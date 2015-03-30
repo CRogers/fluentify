@@ -12,7 +12,8 @@ Via npm: place `fluentify` in the `dependencies` your package.json or run:
 npm install fluentify
 ````
 
-Alternatively grab `dist/fluentify.js`. There are no dependencies.
+Alternatively grab `dist/fluentify.js`. There are no dependencies. Supports both browser (`fluentify` global) or node
+(`fluentify = require('fluentify')`).
 
 Examples
 ---

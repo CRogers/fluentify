@@ -1,21 +1,26 @@
-extendWith = (oldObj, key, value) ->
-  newObj = {}
-  for k, v of oldObj
-    newObj[k] = v
-  newObj[key] = value
-  return newObj
+fluentify = do ->
 
-fluentify = (namedArgs, currentArgs, topArgs, callback) ->
-  if namedArgs.length == 0
-    return callback(topArgs..., currentArgs)
+  extendWith = (oldObj, key, value) ->
+    newObj = {}
+    for k, v of oldObj
+      newObj[k] = v
+    newObj[key] = value
+    return newObj
 
-  ret = {}
-  namedArgs.forEach (nameArg) ->
-    ret[nameArg] = (inArgs...) ->
-      newCurrentArgs = extendWith(currentArgs, nameArg, inArgs)
-      unusedNamedArgs = namedArgs.filter (x) -> x != nameArg
-      fluentify(unusedNamedArgs, newCurrentArgs, topArgs, callback)
-  return ret
+  fullFluentify = (namedArgs, currentArgs, topArgs, callback) ->
+    if namedArgs.length == 0
+      return callback(topArgs..., currentArgs)
 
-module.exports = (namedArgs..., callback) ->
-  return (topArgs...) -> fluentify(namedArgs, {}, topArgs, callback)
+    ret = {}
+    namedArgs.forEach (nameArg) ->
+      ret[nameArg] = (inArgs...) ->
+        newCurrentArgs = extendWith(currentArgs, nameArg, inArgs)
+        unusedNamedArgs = namedArgs.filter (x) -> x != nameArg
+        fullFluentify(unusedNamedArgs, newCurrentArgs, topArgs, callback)
+    return ret
+
+  return (namedArgs..., callback) ->
+    return (topArgs...) -> fullFluentify(namedArgs, {}, topArgs, callback)
+
+if module?.exports? and @module != module
+  module.exports = fluentify

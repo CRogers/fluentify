@@ -7,7 +7,7 @@ allCoffee = './src/*.coffee'
 
 compileToFolder = (path, outputFolder) ->
   gulp.src path
-    .pipe(coffee())
+    .pipe(coffee(bare: true))
     .pipe(gulp.dest("./#{outputFolder}/"))
 
 gulp.task 'coffee', ->
