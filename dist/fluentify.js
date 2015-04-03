@@ -2,46 +2,55 @@ var fluentify,
   slice = [].slice;
 
 fluentify = (function() {
-  var extendWith;
-  extendWith = function(oldObj, key, value) {
-    var k, newObj, v;
-    newObj = {};
-    for (k in oldObj) {
-      v = oldObj[k];
-      newObj[k] = v;
-    }
-    newObj[key] = value;
-    return newObj;
+  var extend, fullFluentify;
+  extend = function(oldObj) {
+    return {
+      "with": function(key, value) {
+        var k, newObj, v;
+        newObj = {};
+        for (k in oldObj) {
+          v = oldObj[k];
+          newObj[k] = v;
+        }
+        newObj[key] = value;
+        return newObj;
+      }
+    };
   };
-  return function(namedArgs, currentArgs, topArgs, callback) {
-    var ret;
-    if (namedArgs.length === 0) {
-      return callback.apply(null, slice.call(topArgs).concat([currentArgs]));
+  fullFluentify = function(methodNames, argsCalledForMethods, initialArgs, callback) {
+    var nextMethods;
+    if (methodNames.length === 0) {
+      return callback.apply(null, slice.call(initialArgs).concat([argsCalledForMethods]));
     }
-    ret = {};
-    namedArgs.forEach(function(nameArg) {
-      return ret[nameArg] = function() {
-        var inArgs, newCurrentArgs, unusedNamedArgs;
-        inArgs = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-        newCurrentArgs = extendWith(currentArgs, nameArg, inArgs);
-        unusedNamedArgs = namedArgs.filter(function(x) {
-          return x !== nameArg;
+    nextMethods = {};
+    methodNames.forEach(function(methodName) {
+      return nextMethods[methodName] = function() {
+        var methodArgs, newArgsCalledForMethods, unusedMethodNames;
+        methodArgs = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+        newArgsCalledForMethods = extend(argsCalledForMethods)["with"](methodName, methodArgs);
+        unusedMethodNames = methodNames.filter(function(x) {
+          return x !== methodName;
         });
-        return fluentify(unusedNamedArgs, newCurrentArgs, topArgs, callback);
+        return fullFluentify(unusedMethodNames, newArgsCalledForMethods, initialArgs, callback);
       };
     });
-    return ret;
+    return nextMethods;
+  };
+  return function() {
+    var callback, i, methodNames;
+    methodNames = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), callback = arguments[i++];
+    return function() {
+      var initialArgs;
+      initialArgs = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+      return fullFluentify(methodNames, {}, initialArgs, callback);
+    };
   };
 })();
 
-if (((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) && this.module !== module) {
-  module.exports = function() {
-    var callback, i, namedArgs;
-    namedArgs = 2 <= arguments.length ? slice.call(arguments, 0, i = arguments.length - 1) : (i = 0, []), callback = arguments[i++];
-    return function() {
-      var topArgs;
-      topArgs = 1 <= arguments.length ? slice.call(arguments, 0) : [];
-      return fluentify(namedArgs, {}, topArgs, callback);
-    };
-  };
-}
+(function() {
+  var isNodeEnvironment;
+  isNodeEnvironment = ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) && this.module !== module;
+  if (isNodeEnvironment) {
+    return module.exports = fluentify;
+  }
+})();
