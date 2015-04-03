@@ -1,7 +1,7 @@
 Fluentify
 ===
 
-Fluentify is a way to easily make fluent interfaces where the methods can be called in any order.
+Fluentify is a way to easily make fluent interfaces in coffeescript where the methods can be called in any order.
 
 Installation
 ---
