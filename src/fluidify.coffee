@@ -1,4 +1,4 @@
-fluentify = do ->
+fluidify = do ->
 
   extend = (oldObj) ->
     with: (key, value) ->
@@ -26,4 +26,4 @@ fluentify = do ->
 do ->
   isNodeEnvironment = module?.exports? and @module != module
   if isNodeEnvironment
-    module.exports = fluentify
+    module.exports = fluidify

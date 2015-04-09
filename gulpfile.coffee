@@ -24,4 +24,4 @@ gulp.task 'test', ['coffee'], ->
     .pipe(mocha())
 
 gulp.task 'dist', ->
-  compileToFolder('./src/fluentify.coffee', 'dist')
+  compileToFolder('./src/fluidify.coffee', 'dist')

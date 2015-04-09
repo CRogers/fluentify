@@ -1,19 +1,19 @@
-Fluentify
+Flulidify
 ===
 
-Fluentify is a way to easily make fluent interfaces in coffeescript where the methods can be called in any order.
+Flulidify is a way to easily make fluent interfaces in coffeescript where the methods can be called in any order.
 
 Installation
 ---
 
-Via npm: place `fluentify` in the `dependencies` your package.json or run:
+Via npm: place `flulidify` in the `dependencies` your package.json or run:
 
 ````
-npm install fluentify
+npm install flulidify
 ````
 
-Alternatively grab `dist/fluentify.js`. There are no dependencies. Supports both browser (`fluentify` global) or node
-(`fluentify = require('fluentify')`).
+Alternatively grab `dist/flulidify.js`. There are no dependencies. Supports both browser (`flulidify` global) or node
+(`flulidify = require('flulidify')`).
 
 Examples
 ---
@@ -49,10 +49,10 @@ modify = (predicate) ->
       actualFunction(predicate, stream, func)
 ````
 
-However, this gets tedious, especially with more methods. With Fluentify it's easy:
+However, this gets tedious, especially with more methods. With Flulidify it's easy:
 
 ````coffee
-modify = fluentify 'inStream', 'using', (predicate, {inStream: [stream], using: [func]}) ->
+modify = flulidify 'inStream', 'using', (predicate, {inStream: [stream], using: [func]}) ->
   # Your code here
 ````
 
@@ -69,13 +69,13 @@ foo(1, 2, 3)
 Would be created using:
 
 ````coffee
-foo = fluentify 'bar', 'baz', (one, two, three, {
+foo = flulidify 'bar', 'baz', (one, two, three, {
     bar: [ayy, bee, cee]
     baz: [ex, why, zee]}) ->
   # Your code here
 ````
 
-Fluentify takes a number of method names and a callback. When all the methods have been called, the callback is executed with the
+Flulidify takes a number of method names and a callback. When all the methods have been called, the callback is executed with the
 initial arguments being the arguments of the first call, followed by a hash mapping method names to arguments they were called
 with. We use coffeescript's nifty destructuring syntax to achieve this.
 
@@ -88,7 +88,7 @@ You can share partially applied fluent apis safely. Lets use this (contrived) bu
 class Employee
   constructor: (@name, @age, @salary) ->
 
-employeeBuilder = fluentify 'name', 'email', 'age', ({
+employeeBuilder = flulidify 'name', 'email', 'age', ({
     name: [name]
     age: [age]
     salary: [salary]}) ->

@@ -1,7 +1,7 @@
-var fluentify,
+var fluidify,
   slice = [].slice;
 
-fluentify = (function() {
+fluidify = (function() {
   var extend, fullFluentify;
   extend = function(oldObj) {
     return {
@@ -51,6 +51,6 @@ fluentify = (function() {
   var isNodeEnvironment;
   isNodeEnvironment = ((typeof module !== "undefined" && module !== null ? module.exports : void 0) != null) && this.module !== module;
   if (isNodeEnvironment) {
-    return module.exports = fluentify;
+    return module.exports = fluidify;
   }
 })();

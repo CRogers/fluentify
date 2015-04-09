@@ -1,19 +1,19 @@
 expect = require('chai').expect
 sinon = require('sinon')
 
-fluentify = require('./fluentify')
+fluidify = require('./fluidify')
 
-describe 'fluentify', ->
+describe 'fluidify', ->
   describe 'no named args', ->
     it 'should allow calling as a normal function', ->
       callback = sinon.spy()
-      fluent = fluentify callback
+      fluent = fluidify callback
       fluent()
       expect(callback.calledOnce).to.be.true
 
     it 'should pass on the top level args and add an empty hash', ->
       callback = sinon.spy()
-      fluent = fluentify callback
+      fluent = fluidify callback
       fluent(1, 2)
       expect(callback.firstCall.args).to.deep.equal [1, 2, {}]
 
@@ -23,7 +23,7 @@ describe 'fluentify', ->
 
     beforeEach ->
       callback = sinon.spy()
-      fluent = fluentify 'foo', callback
+      fluent = fluidify 'foo', callback
 
     it 'should not call the function when initialized', ->
       fluent(1)
@@ -51,7 +51,7 @@ describe 'fluentify', ->
 
     beforeEach ->
       callback = sinon.spy()
-      fluent = fluentify 'foo', 'bar', callback
+      fluent = fluidify 'foo', 'bar', callback
 
     it 'should not call the function when initialized', ->
       fluent(1)
