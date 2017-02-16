@@ -1,19 +1,19 @@
-Flulidify
+Fluidify
 ===
 
-Flulidify is a way to easily make fluent interfaces in coffeescript where the methods can be called in any order.
+Fluidify is a way to easily make fluent interfaces in coffeescript where the methods can be called in any order.
 
 Installation
 ---
 
-Via npm: place `flulidify` in the `dependencies` your package.json or run:
+Via npm: place `fluidify` in the `dependencies` your package.json or run:
 
 ````
-npm install flulidify
+npm install fluidify
 ````
 
-Alternatively grab `dist/flulidify.js`. There are no dependencies. Supports both browser (`flulidify` global) or node
-(`flulidify = require('flulidify')`).
+Alternatively grab `dist/fluidify.js`. There are no dependencies. Supports both browser (`fluidify` global) or node
+(`fluidify = require('fluidify')`).
 
 Examples
 ---
@@ -49,10 +49,10 @@ modify = (predicate) ->
       actualFunction(predicate, stream, func)
 ````
 
-However, this gets tedious, especially with more methods. With Flulidify it's easy:
+However, this gets tedious, especially with more methods. With Fluidify it's easy:
 
 ````coffee
-modify = flulidify 'inStream', 'using', (predicate, {inStream: [stream], using: [func]}) ->
+modify = fluidify 'inStream', 'using', (predicate, {inStream: [stream], using: [func]}) ->
   # Your code here
 ````
 
@@ -69,13 +69,13 @@ foo(1, 2, 3)
 Would be created using:
 
 ````coffee
-foo = flulidify 'bar', 'baz', (one, two, three, {
+foo = fluidify 'bar', 'baz', (one, two, three, {
     bar: [ayy, bee, cee]
     baz: [ex, why, zee]}) ->
   # Your code here
 ````
 
-Flulidify takes a number of method names and a callback. When all the methods have been called, the callback is executed with the
+Fluidify takes a number of method names and a callback. When all the methods have been called, the callback is executed with the
 initial arguments being the arguments of the first call, followed by a hash mapping method names to arguments they were called
 with. We use coffeescript's nifty destructuring syntax to achieve this.
 
@@ -88,7 +88,7 @@ You can share partially applied fluent apis safely. Lets use this (contrived) bu
 class Employee
   constructor: (@name, @age, @salary) ->
 
-employeeBuilder = flulidify 'name', 'email', 'age', ({
+employeeBuilder = fluidify 'name', 'email', 'age', ({
     name: [name]
     age: [age]
     salary: [salary]}) ->
